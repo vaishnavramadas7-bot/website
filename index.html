@@ -206,3 +206,419 @@ chat.style.display=chat.style.display==='flex'?'none':'flex';
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BMSCE Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* Colors based on 60:30:10 ratio */
+  :root {
+    --primary-maroon: #660000;        /* 60% primary maroon */
+    --secondary-gold: #b38b00;        /* 30% secondary gold */
+    --accent-lightgold: #f0d67e;      /* 10% accent light gold */
+    --background: #fff9e6;
+    --text-dark: #3a0b0b;
+    --text-muted: #6e3b00;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--background);
+    color: var(--text-dark);
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(90deg, var(--primary-maroon), #7a1212);
+    color: gold;
+    text-align: center;
+    padding: 110px 20px 80px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: 0 8px 24px rgb(102 0 0 / 0.5);
+  }
+  header h1 {
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: 1.2px;
+    font-weight: 700;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  header p {
+    opacity: 0.9;
+    margin-top: 10px;
+    font-weight: 500;
+    font-style: italic;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  /* NAVBAR */
+  .navbar {
+    text-align: center;
+    padding: 18px;
+    background: var(--background);
+    box-shadow: inset 0 -2px 0 var(--primary-maroon);
+  }
+  .navbar a {
+    margin: 0 18px;
+    text-decoration: none;
+    color: var(--primary-maroon);
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+  .navbar a:hover,
+  .navbar a:focus {
+    color: var(--secondary-gold);
+    border-bottom-color: var(--secondary-gold);
+    outline: none;
+    text-shadow: 0 0 6px var(--accent-lightgold);
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1000px;
+    margin: 120px auto;
+    padding: 0 20px;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: 0.8s ease;
+  }
+  .section.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section.center {
+    text-align: center;
+  }
+  .section h2 {
+    color: var(--primary-maroon);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(179,139,0,0.5);
+  }
+  .section p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 700px;
+    margin: auto;
+    font-weight: 500;
+  }
+
+  /* CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .card {
+    border: 2px solid var(--primary-maroon);
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    background: var(--background);
+    box-shadow: 0 3px 6px rgb(102 0 0 / 0.12);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    cursor: default;
+    font-weight: 600;
+    color: var(--primary-maroon);
+    user-select: none;
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(179, 139, 0, 0.3);
+    border-color: var(--secondary-gold);
+    outline: none;
+  }
+  .card h3 {
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .card p {
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  /* FEATURE SECTIONS */
+  .feature {
+    text-align: center;
+    margin: 140px auto;
+  }
+  .feature h2 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--primary-maroon);
+    text-shadow: 0 1px 3px rgba(179, 139, 0, 0.6);
+  }
+  .feature p {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  /* STATS */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+  }
+  .stat h3 {
+    color: var(--primary-maroon);
+    font-size: 2.8rem;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: 0 0 6px var(--secondary-gold);
+  }
+  .stat p {
+    margin: 5px 0;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 70px;
+    height: 5px;
+    background: var(--primary-maroon);
+    margin: 30px auto;
+    border-radius: 4px;
+    box-shadow: 0 0 12px var(--secondary-gold);
+  }
+
+  /* IMAGES */
+  img {
+    width: 100%;
+    border-radius: 14px;
+    margin: 40px 0;
+    display: block;
+    box-shadow: 0 4px 20px rgb(102 0 0 / 0.15);
+    transition: transform 0.3s ease;
+  }
+  img:hover,
+  img:focus {
+    transform: scale(1.02);
+    outline: none;
+  }
+
+  /* CHAT BUTTON */
+  .chatbox {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-maroon);
+    color: var(--accent-lightgold);
+    padding: 14px 22px;
+    border-radius: 28px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 700;
+    user-select: none;
+    box-shadow:
+      0 0 8px var(--secondary-gold),
+      0 0 12px var(--secondary-gold) inset;
+    transition: background-color 0.3s ease, box-shadow 0.4s ease;
+  }
+  .chatbox:hover,
+  .chatbox:focus {
+    background: var(--secondary-gold);
+    color: var(--primary-maroon);
+    box-shadow:
+      0 0 18px var(--secondary-gold),
+      0 0 24px var(--secondary-gold) inset;
+    outline: none;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header {
+      padding: 70px 20px 50px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+    }
+    .section {
+      margin: 80px auto;
+    }
+    .feature {
+      margin: 80px auto;
+    }
+    .cards {
+      grid-template-columns: 1fr;
+    }
+    .stats {
+      flex-direction: column;
+      gap: 30px;
+    }
+    .navbar a {
+      margin: 0 12px;
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BMS College of Engineering</h1>
+  <p>Empowering Innovation Through Research & Excellence</p>
+</header>
+
+<nav class="navbar" role="navigation" aria-label="Primary navigation">
+  <a href="#">Home</a>
+  <a href="research.html">Research</a>
+  <a href="academics.html">Academics</a>
+  <a href="placements.html">Placements</a> <!-- Added here -->
+  <a href="admission.html">Admissions</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- HERO MESSAGE -->
+<section class="section center" id="hero">
+  <h2>Shaping the Future of Engineering</h2>
+  <div class="divider" aria-hidden="true"></div>
+  <p>
+    Since <strong>1946</strong>, BMSCE has been at the forefront of education, combining academic excellence with innovation and real-world impact.
+  </p>
+</section>
+
+<!-- CAMPUS IMAGE -->
+<div>
+  <img src="images/bms-college-of-engineering-bangalore-218112.jpg" alt="BMS College of Engineering Campus" />
+</div>
+
+<!-- CORE VALUES -->
+<section class="section" id="core-values">
+  <h2>Core Values</h2>
+  <div class="cards" role="list">
+    <article class="card" role="listitem" tabindex="0">
+      <h3>Integrity</h3>
+      <p>Ethics and honesty in everything we do.</p>
+    </article>
+    <article class="card" role="listitem" tabindex="0">
+      <h3>Innovation</h3>
+      <p>Driving research and new ideas forward.</p>
+    </article>
+    <article class="card" role="listitem" tabindex="0">
+      <h3>Excellence</h3>
+      <p>Maintaining the highest standards.</p>
+    </article>
+  </div>
+</section>
+
+<!-- STUDENTS IMAGE -->
+<div>
+  <img src="images/students-group.jpeg" alt="Students at BMSCE" />
+</div>
+
+<!-- FEATURE BLOCK -->
+<section class="feature" id="feature-1">
+  <h2>Designed for Tomorrow</h2>
+  <div class="divider" aria-hidden="true"></div>
+  <p>
+    Our campus blends modern infrastructure with cutting-edge research facilities to prepare students for global challenges.
+  </p>
+</section>
+
+<!-- BUILDING IMAGE -->
+<div>
+  <img src="images/building.jpg" alt="Modern building at BMSCE campus" />
+</div>
+
+<!-- STATS -->
+<section class="section center" id="stats">
+  <h2>Our Impact</h2>
+  <div class="stats" role="list">
+    <div class="stat" role="listitem" aria-label="More than 10,000 students">
+      <h3>10,000+</h3>
+      <p>Students</p>
+    </div>
+    <div class="stat" role="listitem" aria-label="More than 500 faculty members">
+      <h3>500+</h3>
+      <p>Faculty</p>
+    </div>
+    <div class="stat" role="listitem" aria-label="More than 200 research projects">
+      <h3>200+</h3>
+      <p>Research Projects</p>
+    </div>
+    <div class="stat" role="listitem" aria-label="75 years of legacy">
+      <h3>75+</h3>
+      <p>Years Legacy</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE BLOCK 2 -->
+<section class="feature" id="feature-2">
+  <h2>Student Life & Growth</h2>
+  <div class="divider" aria-hidden="true"></div>
+  <p>
+    From academics to sports and innovation clubs, BMSCE provides an ecosystem for holistic development.
+  </p>
+</section>
+
+<!-- LIBRARY IMAGE -->
+<div>
+  <img src="images/library.jpg" alt="Library at BMSCE" />
+</div>
+
+<!-- ACHIEVEMENTS -->
+<section class="section center" id="achievements">
+  <h2>Achievements</h2>
+  <div class="divider" aria-hidden="true"></div>
+  <p>
+    Our alumni excel globally in top industries and research institutions, contributing to society and innovation.
+  </p>
+</section>
+
+<!-- GRADUATION IMAGE -->
+<div>
+  <img src="images/graduation.jpg" alt="Graduation ceremony at BMSCE" />
+</div>
+
+<footer>
+  © 2026 BMSCE Portal
+</footer>
+
+<div class="chatbox" tabindex="0" role="button" aria-label="Open AI Chat Bot">💬 AI Chat Bot</div>
+
+<script>
+  const sections = document.querySelectorAll('.section, .feature');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+  sections.forEach((sec) => observer.observe(sec));
+</script>
+
+</body>
+</html>
