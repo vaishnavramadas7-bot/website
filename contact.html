@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - College Research Portal</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #111111;
+    }
+
+    header {
+      background: linear-gradient(90deg, #5f0f0f, #7a1212);
+      padding: 60px 20px 40px;
+      text-align: center;
+      color: white;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    .card {
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 2px solid #7a1212;
+      border-radius: 16px;
+      background: #fff;
+      transition: 0.3s ease;
+      position: relative;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #5f0f0f, #7a1212);
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(122, 18, 18, 0.15);
+    }
+
+    .title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #5f0f0f;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      font-size: 1.05rem;
+      color: #111;
+    }
+
+    .subnote {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    iframe {
+      width: 100%;
+      height: 260px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 15px;
+      border: 2px solid #7a1212;
+    }
+
+    .note {
+      margin-top: 40px;
+      padding: 15px;
+      background: #fce7e7;
+      border-left: 4px solid #7a1212;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #888;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Contact Us</h1>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="title">Email</div>
+    <div class="highlight">Bmscecontact@gmail.com</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Contact Numbers</div>
+    <div class="highlight">080 9876543211</div>
+    <div class="highlight">080 9876543222</div>
+    <div class="subnote">
+      Please note: The Offices, Departments, Research Centres and other Facilities have their own numbers. Please consult the Directory or the Department/Centre websites.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">Location</div>
+    <div class="highlight">BMS College of Engineering, Bull Temple Rd, Basavanagudi, Bengaluru, Karnataka 560004</div>
+    <iframe src="https://maps.google.com/maps?q=BMS%20College%20of%20Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+  </div>
+
+  <div class="note">
+    BMS College of Engineering, Bull Temple Rd, Basavanagudi, Bengaluru, Karnataka 560004
+  </div>
+
+</div>
+
+<footer>
+  © 2026 College Research Insights
+</footer>
+
+</body>
+</html>

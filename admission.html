@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMSCE Admissions Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  color: #111;
+}
+
+header {
+  background: linear-gradient(90deg, #5f0f0f, #7a1212);
+  color: white;
+  text-align: center;
+  padding: 50px 20px 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+nav {
+  text-align: center;
+  padding: 15px;
+}
+
+nav a {
+  color: #7a1212;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #7a1212;
+  left: 0;
+  bottom: -4px;
+  transition: 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card {
+  border: 2px solid #7a1212;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 15px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(122,18,18,0.15);
+}
+
+h2 {
+  color: #5f0f0f;
+}
+
+p {
+  color: #444;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background: linear-gradient(90deg, #5f0f0f, #7a1212);
+  color: white;
+  padding: 12px;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background: #fce7e7;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  border-top: 1px solid #eee;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BMS College of Engineering</h1>
+  <p>Admissions Portal</p>
+</header>
+
+<nav>
+  <a href="#nri">NRI</a>
+  <a href="#kcet">KCET</a>
+  <a href="#comedk">COMEDK</a>
+</nav>
+
+<section id="nri">
+  <h2>NRI Admission</h2>
+  <div class="card">
+    <p>Admission for NRI students is based on merit and availability of seats.</p>
+    <table>
+      <tr><th>Branch</th><th>Annual Fees (INR)</th></tr>
+      <tr><td>CSE</td><td>8,00,000</td></tr>
+      <tr><td>ECE</td><td>6,00,000</td></tr>
+      <tr><td>Mechanical</td><td>5,50,000</td></tr>
+      <tr><td>Civil</td><td>3,00,000</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="kcet">
+  <h2>KCET Admission</h2>
+  <div class="card">
+    <p>Admission through Karnataka CET is based on counseling.</p>
+    <table>
+      <tr><th>Branch</th><th>Annual Fees (INR)</th></tr>
+      <tr><td>CSE</td><td>1,00,000</td></tr>
+      <tr><td>ECE</td><td>1,00,000</td></tr>
+      <tr><td>Mechanical</td><td>80,000</td></tr>
+      <tr><td>Civil</td><td>75,000</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="comedk">
+  <h2>COMEDK Admission</h2>
+  <div class="card">
+    <p>Admission through COMEDK is based on entrance exam rank.</p>
+    <table>
+      <tr><th>Branch</th><th>Annual Fees (INR)</th></tr>
+      <tr><td>CSE</td><td>3,00,000</td></tr>
+      <tr><td>ECE</td><td>3,00,000</td></tr>
+      <tr><td>Mechanical</td><td>3,00,000</td></tr>
+      <tr><td>Civil</td><td>3,00,000</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 BMSCE Admissions Portal</p>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('section');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{threshold:0.2});
+sections.forEach(sec => observer.observe(sec));
+</script>
+
+</body>
+</html>

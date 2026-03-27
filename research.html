@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Research Portal</title>
+
+  
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #111111;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(90deg, #5f0f0f, #7a1212);
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section h2 {
+      color: #5f0f0f;
+      margin-bottom: 10px;
+      border-left: 5px solid #7a1212;
+      padding-left: 10px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      border: 2px solid #7a1212;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .highlight {
+      color: #7a1212;
+      font-weight: 600;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #fce7e7;
+      color: #5f0f0f;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-right: 5px;
+    }
+
+    .quote {
+      font-style: italic;
+      border-left: 4px solid #7a1212;
+      padding-left: 12px;
+      margin-top: 10px;
+      color: #444;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+      background: #f3f4f6;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>College Research Insights</h1>
+</header>
+
+<div class="container">
+
+  <div class="section">
+    <h2>Research Overview</h2>
+    <div class="card">
+      <p>
+        Our institution promotes <span class="highlight">cutting-edge research</span> aimed at solving global challenges.
+        Students and faculty collaborate across disciplines to innovate in science, technology, and sustainability.
+      </p>
+      <div>
+        <span class="tag">Innovation</span>
+        <span class="tag">Technology</span>
+        <span class="tag">Sustainability</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Featured Researchers</h2>
+    <div class="card">
+      <p><span class="highlight">Vaishnav</span> — An expert in AI/ML research with over 7 years of experience. He completed his Master's from Harvard and has contributed to advanced machine learning systems and intelligent automation.</p>
+      <p class="quote">"Research is not about finding answers, but asking the right questions."</p>
+
+      <p style="margin-top:20px;"><span class="highlight">Varun Rajesh</span> — Holds a Master's in Mechanical Engineering from Stanford. Currently working in research and development at BMSCE, focusing on innovative mechanical systems and applied engineering solutions.</p>
+      <p class="quote">"Engineering innovation begins where curiosity meets persistence."</p>
+
+      <p style="margin-top:20px;"><span class="highlight">Ana de Armas</span> — A collaborating researcher associated with the college, actively guiding students in the field of robotics and intelligent systems. She plays a key role in mentoring student-led robotics projects and innovation initiatives.</p>
+      <p class="quote">"Robotics is where imagination meets engineering reality."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Research Facilities</h2>
+    <div class="card">
+      <p>
+        Our campus is equipped with <span class="highlight">state-of-the-art laboratories</span>, high-performance computing systems, and collaborative workspaces designed to foster innovation.
+      </p>
+      <p>
+        Facilities include AI research labs, mechanical prototyping units, data analytics centers, and dedicated research hubs for interdisciplinary work.
+      </p>
+      <p>
+        We ensure students have access to the latest tools, software, and mentorship required to excel in research.
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Student Research Support</h2>
+    <div class="card">
+      <p>
+        We actively support students by providing <span class="highlight">guided research programs</span>, funding opportunities, and expert mentorship.
+      </p>
+      <p>
+        Students can participate in live projects, publish research papers, and collaborate with experienced researchers.
+      </p>
+      <p class="quote">"Great research starts with great guidance and the courage to explore."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Future Vision</h2>
+    <div class="card">
+      <p>
+        We aim to expand our research capabilities by integrating emerging technologies and fostering global partnerships.
+      </p>
+      <p>
+        Our goal is to build a <span class="highlight">research-driven ecosystem</span> that empowers innovation and societal growth.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script>
+  const sections = document.querySelectorAll('.section');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+</script>
+
+</body>
+</html>

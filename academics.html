@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMSCE Academic Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  color: #111;
+}
+
+header {
+  background: linear-gradient(90deg, #5f0f0f, #7a1212);
+  color: white;
+  text-align: center;
+  padding: 50px 20px 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+nav {
+  text-align: center;
+  padding: 15px;
+}
+
+nav a {
+  color: #7a1212;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #7a1212;
+  left: 0;
+  bottom: -4px;
+  transition: 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card {
+  border: 2px solid #7a1212;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 15px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(122,18,18,0.15);
+}
+
+h2 {
+  color: #5f0f0f;
+  position: relative;
+  padding-left: 14px;
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 70%;
+  background: linear-gradient(180deg, #5f0f0f, #7a1212);
+  border-radius: 4px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin: 8px 0;
+}
+
+.highlight {
+  color: #7a1212;
+  font-weight: 500;
+}
+
+.footer-note {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  border-top: 1px solid #eee;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BMS College of Engineering</h1>
+  <p>Academic Information Portal</p>
+</header>
+
+<nav>
+  <a href="#departments">Departments</a>
+  <a href="#courses">Courses</a>
+  <a href="#faculty">Faculty</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="departments">
+  <h2>Departments</h2>
+  <div class="card">
+    <ul>
+      <li><span class="highlight">Computer Science & Engineering</span> – Focus on AI, ML, and software systems</li>
+      <li><span class="highlight">Electronics & Communication</span> – Embedded systems and communication tech</li>
+      <li><span class="highlight">Mechanical Engineering</span> – Design, robotics, and manufacturing</li>
+      <li><span class="highlight">Civil Engineering</span> – Infrastructure and sustainable construction</li>
+      <li><span class="highlight">Information Science</span> – Data systems and cloud computing</li>
+    </ul>
+  </div>
+</section>
+
+<section id="courses">
+  <h2>Courses Offered</h2>
+  <div class="card">
+    <p>BMSCE offers a wide range of <span class="highlight">undergraduate, postgraduate, and doctoral programs</span> designed to meet industry and research demands.</p>
+    <ul>
+      <li>B.E. in Computer Science</li>
+      <li>B.E. in Mechanical Engineering</li>
+      <li>M.Tech in Data Science</li>
+      <li>MBA in Technology Management</li>
+    </ul>
+  </div>
+</section>
+
+<section id="faculty">
+  <h2>Faculty</h2>
+  <div class="card">
+    <p>Our faculty members are highly qualified, many holding <span class="highlight">PhDs and international research experience</span>.</p>
+    <ul>
+      <li>Dr. Ramesh – Head of CSE</li>
+      <li>Dr. Priya – Head of ECE</li>
+      <li>Dr. Anil – Head of Mechanical</li>
+    </ul>
+    <p class="footer-note">Faculty actively mentor students in research, innovation, and academic excellence.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Information</h2>
+  <div class="card">
+    <p>Email: <span class="highlight">academics@bmsce.ac.in</span></p>
+    <p>Phone: <span class="highlight">+91-80-26622130</span></p>
+    <p>Address: BMS College of Engineering, Bull Temple Road, Bengaluru</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 BMSCE Academic Portal</p>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('section');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{threshold:0.2});
+sections.forEach(sec => observer.observe(sec));
+</script>
+
+</body>
+</html3E
