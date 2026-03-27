@@ -1,129 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>BMSCE Admissions Portal</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #ffffff;
-  color: #111;
-}
+  /* Color palette based on 60:30:10 maroon-gold ratio */
+  :root {
+    --primary-maroon: #660000;         /* 60% primary maroon */
+    --secondary-gold: #b38b00;         /* 30% secondary gold */
+    --accent-lightgold: #f0d67e;       /* 10% accent light gold */
+    --background: #fff9e6;
+    --text-dark: #3a0b0b;
+    --text-muted: #6e3b00;
+  }
 
-header {
-  background: linear-gradient(90deg, #5f0f0f, #7a1212);
-  color: white;
-  text-align: center;
-  padding: 50px 20px 30px;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-}
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    color: var(--text-dark);
+  }
 
-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
-}
+  header {
+    background-color: var(--primary-maroon);
+    color: var(--accent-lightgold);
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(102, 0, 0, 0.5);
+  }
 
-nav {
-  text-align: center;
-  padding: 15px;
-}
+  header h1 {
+    margin: 0;
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-shadow: 0 2px 6px rgba(179, 139, 0, 0.8);
+  }
 
-nav a {
-  color: #7a1212;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: 500;
-  position: relative;
-}
+  header p {
+    margin: 8px 0 0;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--secondary-gold);
+    font-style: italic;
+  }
 
-nav a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  background: #7a1212;
-  left: 0;
-  bottom: -4px;
-  transition: 0.3s;
-}
+  nav {
+    background-color: var(--secondary-gold);
+    padding: 12px 0;
+    text-align: center;
+    box-shadow: inset 0 -3px 0 var(--primary-maroon);
+  }
 
-nav a:hover::after {
-  width: 100%;
-}
+  nav a {
+    color: var(--primary-maroon);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 20px;
+    text-decoration: none;
+    padding-bottom: 6px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+  }
 
-section {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.7s ease;
-}
+  nav a:hover,
+  nav a:focus {
+    color: var(--accent-lightgold);
+    border-bottom-color: var(--accent-lightgold);
+    text-shadow: 0 0 5px var(--accent-lightgold);
+    outline: none;
+  }
 
-section.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+  section {
+    padding: 30px 20px;
+    max-width: 900px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(179, 139, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-.card {
-  border: 2px solid #7a1212;
-  border-radius: 16px;
-  padding: 20px;
-  margin-top: 15px;
-  background: #fff;
-  transition: 0.3s;
-}
+  /* Hover "pop" effect on admission sections */
+  section:hover {
+    transform: scale(1.03);
+    box-shadow:
+      0 12px 40px rgba(179, 139, 0, 0.35),
+      0 0 15px var(--accent-lightgold);
+    cursor: pointer;
+  }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(122,18,18,0.15);
-}
+  h2 {
+    color: var(--primary-maroon);
+    font-size: 2rem;
+    margin-bottom: 18px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(179, 139, 0, 0.5);
+  }
 
-h2 {
-  color: #5f0f0f;
-}
+  p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    font-weight: 500;
+  }
 
-p {
-  color: #444;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-weight: 600;
+  }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-  border-radius: 10px;
-  overflow: hidden;
-}
+  table, th, td {
+    border: 2px solid var(--primary-maroon);
+  }
 
-th {
-  background: linear-gradient(90deg, #5f0f0f, #7a1212);
-  color: white;
-  padding: 12px;
-}
+  th {
+    background-color: var(--primary-maroon);
+    color: var(--accent-lightgold);
+    padding: 14px 12px;
+    font-size: 1.1rem;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
 
-td {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
+  td {
+    padding: 14px 12px;
+    text-align: center;
+    color: var(--primary-maroon);
+    background: #fffdf2;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 
-tr:hover {
-  background: #fce7e7;
-}
+  /* Hover effect on table rows */
+  tbody tr:hover {
+    background-color: var(--secondary-gold);
+    color: var(--primary-maroon);
+    cursor: default;
+    box-shadow: inset 0 0 8px var(--accent-lightgold);
+  }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #777;
-  border-top: 1px solid #eee;
-}
+  /* Footer styling */
+  footer {
+    background-color: var(--primary-maroon);
+    color: var(--accent-lightgold);
+    text-align: center;
+    padding: 18px 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 -3px 10px rgba(102, 0, 0, 0.6);
+  }
 
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 2rem;
+    }
+    nav a {
+      margin: 0 12px;
+      font-size: 1rem;
+    }
+    section {
+      margin: 30px 12px;
+      padding: 25px 15px;
+    }
+    table, th, td {
+      font-size: 0.9rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -134,68 +180,71 @@ footer {
 </header>
 
 <nav>
-  <a href="#nri">NRI</a>
-  <a href="#kcet">KCET</a>
-  <a href="#comedk">COMEDK</a>
+  <a href="#nri">NRI Admission</a>
+  <a href="#kcet">KCET Admission</a>
+  <a href="#comedk">COMEDK Admission</a>
 </nav>
 
-<section id="nri">
+<section id="nri" tabindex="0" aria-label="NRI Admission">
   <h2>NRI Admission</h2>
-  <div class="card">
-    <p>Admission for NRI students is based on merit and availability of seats.</p>
-    <table>
-      <tr><th>Branch</th><th>Annual Fees (INR)</th></tr>
-      <tr><td>CSE</td><td>8,00,000</td></tr>
-      <tr><td>ECE</td><td>6,00,000</td></tr>
-      <tr><td>Mechanical</td><td>5,50,000</td></tr>
-      <tr><td>Civil</td><td>3,00,000</td></tr>
-    </table>
-  </div>
+  <p>Admission for NRI students is based on merit and availability of seats.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Branch</th>
+        <th>Annual Fees (INR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Computer Science & Engineering</td><td>8,00,000</td></tr>
+      <tr><td>Electronics & Communication</td><td>6,00,000</td></tr>
+      <tr><td>Mechanical Engineering</td><td>5,50,000</td></tr>
+      <tr><td>Civil Engineering</td><td>3,00,000</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<section id="kcet">
+<section id="kcet" tabindex="0" aria-label="KCET Admission">
   <h2>KCET Admission</h2>
-  <div class="card">
-    <p>Admission through Karnataka CET is based on counseling.</p>
-    <table>
-      <tr><th>Branch</th><th>Annual Fees (INR)</th></tr>
-      <tr><td>CSE</td><td>1,00,000</td></tr>
-      <tr><td>ECE</td><td>1,00,000</td></tr>
-      <tr><td>Mechanical</td><td>80,000</td></tr>
-      <tr><td>Civil</td><td>75,000</td></tr>
-    </table>
-  </div>
+  <p>Admission through Karnataka CET is based on state government counseling.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Branch</th>
+        <th>Annual Fees (INR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Computer Science & Engineering</td><td>1,00,000</td></tr>
+      <tr><td>Electronics & Communication</td><td>1,00,000</td></tr>
+      <tr><td>Mechanical Engineering</td><td>1,00,000</td></tr>
+      <tr><td>Civil Engineering</td><td>1,00,000</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<section id="comedk">
+<section id="comedk" tabindex="0" aria-label="COMEDK Admission">
   <h2>COMEDK Admission</h2>
-  <div class="card">
-    <p>Admission through COMEDK is based on entrance exam rank.</p>
-    <table>
-      <tr><th>Branch</th><th>Annual Fees (INR)</th></tr>
-      <tr><td>CSE</td><td>3,00,000</td></tr>
-      <tr><td>ECE</td><td>3,00,000</td></tr>
-      <tr><td>Mechanical</td><td>3,00,000</td></tr>
-      <tr><td>Civil</td><td>3,00,000</td></tr>
-    </table>
-  </div>
+  <p>Admission through COMEDK is based on entrance exam rank and counseling.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Branch</th>
+        <th>Annual Fees (INR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Computer Science & Engineering</td><td>3,00,000</td></tr>
+      <tr><td>Electronics & Communication</td><td>3,00,000</td></tr>
+      <tr><td>Mechanical Engineering</td><td>1,80,000</td></tr>
+      <tr><td>Civil Engineering</td><td>1,70,000</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <footer>
-  <p>© 2026 BMSCE Admissions Portal</p>
+  <p>&copy; 2026 BMSCE Admissions Portal</p>
 </footer>
-
-<script>
-const sections = document.querySelectorAll('section');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-    }
-  });
-},{threshold:0.2});
-sections.forEach(sec => observer.observe(sec));
-</script>
 
 </body>
 </html>
