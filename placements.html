@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BMSCE Placement Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #fff8f0;
+    color: #610000;
+    scroll-behavior: smooth;
+  }
+
+  /* Header with flat top and rounded bottom edges */
+  header {
+    background: #610000;
+    color: gold;
+    padding: 20px;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(97, 0, 0, 0.3);
+  }
+
+  .container {
+    width: 60%;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .card {
+    background: #fff;
+    padding: 18px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: 2px solid #610000;
+    box-shadow: 0 3px 7px rgba(97, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(97, 0, 0, 0.3);
+    z-index: 10;
+  }
+
+  .highlight {
+    border: 3px solid #610000;
+  }
+
+  .active {
+    border: 3px solid #b38b00;
+    transform: scale(1.05);
+  }
+
+  .kpi-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .kpi {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    border: 2px solid #b38b00;
+    border-radius: 10px;
+    background: #fff9e6;
+    color: #610000;
+    font-weight: 600;
+  }
+
+  .kpi h3 {
+    margin: 5px 0;
+    color: #b38b00;
+    font-size: 1.6rem;
+  }
+
+  .buttons button {
+    margin: 5px;
+    padding: 8px 14px;
+    border: none;
+    background: #610000;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.25s ease;
+  }
+
+  .buttons button:hover {
+    background: #804000;
+  }
+
+  h2 {
+    color: #610000;
+    border-bottom: 3px solid #b38b00;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  li {
+    margin: 10px 0;
+  }
+
+  .pdf-btn {
+    background: #610000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.25s ease;
+    margin-bottom: 20px;
+  }
+
+  .pdf-btn:hover {
+    background: #804000;
+  }
+
+  /* Hide branch sections initially */
+  .branch {
+    display: none;
+  }
+
+  /* Reduce pie chart height */
+  #companyChart {
+    max-width: 50%;
+    margin: auto;
+    display: block;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .container {
+      width: 90%;
+      padding: 10px;
+    }
+    .kpi-container {
+      flex-direction: column;
+      gap: 15px;
+    }
+    .kpi {
+      font-size: 0.9rem;
+    }
+    .kpi h3 {
+      font-size: 1.3rem;
+    }
+    #companyChart {
+      max-width: 90%;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>BMSCE Placement Dashboard</h1>
+  <p>Analytics Report</p>
+</header>
+
+<div class="container" id="dashboard">
+
+  <button class="pdf-btn" onclick="downloadPDF()">Download as PDF</button>
+
+  <!-- KPI -->
+  <div class="kpi-container">
+    <div class="kpi">
+      <h3>₹11.40 LPA</h3>
+      <p>Avg UG Package</p>
+    </div>
+    <div class="kpi">
+      <h3>₹51.50 LPA</h3>
+      <p>Highest Package</p>
+    </div>
+    <div class="kpi">
+      <h3>82%</h3>
+      <p>UG Placement</p>
+    </div>
+    <div class="kpi">
+      <h3>94%</h3>
+      <p>Top Branch Placement</p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="card">
+    <h2>Branch-wise Average Package</h2>
+    <canvas id="packageChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>Placement Percentage by Branch</h2>
+    <canvas id="placementChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>Company-wise Hiring</h2>
+    <canvas id="companyChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>Year-wise Placement Trends</h2>
+    <canvas id="trendChart"></canvas>
+  </div>
+
+  <!-- Insights -->
+  <div class="card">
+    <h2>Placement Insights</h2>
+    <ul>
+      <li>CS branches dominate placements with &gt;90% placement rate.</li>
+      <li>Highest package ₹51.50 LPA secured in CSE.</li>
+      <li>Core branches show steady but lower placement performance.</li>
+      <li>Average package nearly doubled from 2020 to 2025.</li>
+      <li>Placement rate improved from 65% to 82% over 5 years.</li>
+      <li>Top recruiters dominate tech hiring roles.</li>
+    </ul>
+  </div>
+
+  <!-- UG -->
+  <div class="card highlight">
+    <h2>Overall UG Placement</h2>
+    <p>Average: ₹11.40 LPA</p>
+    <p>Median: ₹8.70 LPA</p>
+    <p>Highest: ₹51.50 LPA</p>
+    <p>Placement: 82%</p>
+  </div>
+
+  <!-- PG -->
+  <div class="card highlight">
+    <h2>Overall PG Placement</h2>
+    <p>Average: ₹7.10 LPA</p>
+    <p>Median: ₹7.00 LPA</p>
+    <p>Highest: ₹24.00 LPA</p>
+    <p>Placement: 76%</p>
+  </div>
+
+  <!-- Buttons -->
+  <div class="card buttons">
+    <h2>Select Branch</h2>
+    <button onclick="show('cse')">CSE</button>
+    <button onclick="show('ise')">ISE</button>
+    <button onclick="show('aiml')">AIML</button>
+    <button onclick="show('ece')">ECE</button>
+    <button onclick="show('eee')">EEE</button>
+    <button onclick="show('mech')">Mechanical</button>
+    <button onclick="show('civil')">Civil</button>
+  </div>
+
+  <!-- Branch Sections -->
+  <div id="cse" class="card branch">
+    <h2>CSE</h2>
+    <p>Average: ₹14.20 LPA</p>
+    <p>Median: ₹11.80 LPA</p>
+    <p>Highest: ₹51.50 LPA</p>
+    <p>Placement: 94%</p>
+  </div>
+
+  <div id="ise" class="card branch">
+    <h2>ISE</h2>
+    <p>Average: ₹12.60 LPA</p>
+    <p>Median: ₹10.40 LPA</p>
+    <p>Highest: ₹42.00 LPA</p>
+    <p>Placement: 92%</p>
+  </div>
+
+  <div id="aiml" class="card branch">
+    <h2>AIML</h2>
+    <p>Average: ₹13.10 LPA</p>
+    <p>Median: ₹10.90 LPA</p>
+    <p>Highest: ₹38.00 LPA</p>
+    <p>Placement: 91%</p>
+  </div>
+
+  <div id="ece" class="card branch">
+    <h2>ECE</h2>
+    <p>Average: ₹8.60 LPA</p>
+    <p>Median: ₹7.50 LPA</p>
+    <p>Highest: ₹30.00 LPA</p>
+    <p>Placement: 84%</p>
+  </div>
+
+  <div id="eee" class="card branch">
+    <h2>EEE</h2>
+    <p>Average: ₹7.40 LPA</p>
+    <p>Median: ₹6.80 LPA</p>
+    <p>Highest: ₹22.00 LPA</p>
+    <p>Placement: 79%</p>
+  </div>
+
+  <div id="mech" class="card branch">
+    <h2>Mechanical</h2>
+    <p>Average: ₹6.10 LPA</p>
+    <p>Median: ₹5.60 LPA</p>
+    <p>Highest: ₹18.00 LPA</p>
+    <p>Placement: 74%</p>
+  </div>
+
+  <div id="civil" class="card branch">
+    <h2>Civil</h2>
+    <p>Average: ₹5.20 LPA</p>
+    <p>Median: ₹4.80 LPA</p>
+    <p>Highest: ₹14.00 LPA</p>
+    <p>Placement: 68%</p>
+  </div>
+
+</div>
+
+<script>
+  // Scroll + highlight branch
+  function show(id) {
+    document.querySelectorAll(".branch").forEach(b => {
+      b.style.display = "none";
+      b.classList.remove("active");
+    });
+    let el = document.getElementById(id);
+    el.style.display = "block";
+    el.classList.add("active");
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  // PDF download
+  function downloadPDF() {
+    let element = document.getElementById("dashboard");
+    html2pdf().from(element).save("Placement_Report.pdf");
+  }
+
+  // Charts init after DOM loads
+  window.onload = function () {
+    new Chart(document.getElementById("packageChart"), {
+      type: "bar",
+      data: {
+        labels: ["CSE", "ISE", "AIML", "ECE", "EEE", "Mech", "Civil"],
+        datasets: [
+          {
+            label: "Avg Package (LPA)",
+            data: [14.2, 12.6, 13.1, 8.6, 7.4, 6.1, 5.2],
+            backgroundColor: "#610000",
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: "#610000" },
+            grid: { color: "#f1e3b3" },
+          },
+          x: { ticks: { color: "#610000" }, grid: { color: "#f1e3b3" } },
+        },
+        plugins: {
+          legend: { labels: { color: "#610000" } },
+        },
+      },
+    });
+
+    new Chart(document.getElementById("placementChart"), {
+      type: "bar",
+      data: {
+        labels: ["CSE", "ISE", "AIML", "ECE", "EEE", "Mech", "Civil"],
+        datasets: [
+          {
+            label: "Placement %",
+            data: [94, 92, 91, 84, 79, 74, 68],
+            backgroundColor: "#b38b00",
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: "#610000" },
+            grid: { color: "#f1e3b3" },
+          },
+          x: { ticks: { color: "#610000" }, grid: { color: "#f1e3b3" } },
+        },
+        plugins: {
+          legend: { labels: { color: "#610000" } },
+        },
+      },
+    });
+
+    const companyData = {
+      labels: ["Amazon", "Accenture", "Oracle", "IBM", "Deloitte", "Adobe"],
+      datasets: [
+        {
+          data: [15, 25, 10, 12, 20, 8],
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+            "#FF9F40",
+          ],
+        },
+      ],
+    };
+
+    new Chart(document.getElementById("companyChart"), {
+      type: "pie",
+      data: companyData,
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              font: { size: 14 },
+            },
+          },
+        },
+        responsive: true,
+      },
+    });
+
+    new Chart(document.getElementById("trendChart"), {
+      type: "line",
+      data: {
+        labels: ["2020", "2021", "2022", "2023", "2024", "2025"],
+        datasets: [
+          {
+            label: "Avg Package (LPA)",
+            data: [6.5, 7.2, 9.8, 10.5, 11.2, 11.4],
+            borderColor: "#610000",
+            fill: false,
+          },
+          {
+            label: "Placement %",
+            data: [65, 70, 78, 80, 81, 82],
+            borderColor: "#b38b00",
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            ticks: { color: "#610000" },
+            grid: { color: "#f1e3b3" },
+          },
+          x: {
+            ticks: { color: "#610000" },
+            grid: { color: "#f1e3b3" },
+          },
+        },
+        plugins: {
+          legend: { labels: { color: "#610000" } },
+        },
+      },
+    });
+  };
+</script>
+
+</body>
+</html>
