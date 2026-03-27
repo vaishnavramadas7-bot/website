@@ -1,115 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - College Research Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - BMSCE Portal</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #ffffff;
-      color: #111111;
-    }
+<style>
+:root {
+  --primary: #660000;
+  --secondary: #b38b00;
+  --accent: #f0d67e;
+  --bg: #fff9e6;
+  --text: #3a0b0b;
+}
 
-    header {
-      background: linear-gradient(90deg, #5f0f0f, #7a1212);
-      padding: 60px 20px 40px;
-      text-align: center;
-      color: white;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
-    }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 2.8rem;
-      font-weight: 600;
-    }
+header {
+  background: linear-gradient(90deg, var(--primary), #7a1212);
+  padding: 80px 20px 60px;
+  text-align: center;
+  color: var(--accent);
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 50px 20px;
-    }
+header h1 {
+  margin: 0;
+  font-size: 2.8rem;
+}
 
-    .card {
-      padding: 25px;
-      margin-bottom: 25px;
-      border: 2px solid #7a1212;
-      border-radius: 16px;
-      background: #fff;
-      transition: 0.3s ease;
-      position: relative;
-    }
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 20px;
+}
 
-    .card::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, #5f0f0f, #7a1212);
-      border-bottom-left-radius: 16px;
-      border-bottom-right-radius: 16px;
-    }
+.card {
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 25px rgba(122, 18, 18, 0.15);
-    }
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
 
-    .title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #5f0f0f;
-      margin-bottom: 10px;
-    }
+.title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
 
-    .highlight {
-      font-size: 1.05rem;
-      color: #111;
-    }
+.highlight {
+  font-size: 1.05rem;
+}
 
-    .subnote {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #555;
-      line-height: 1.5;
-    }
+.subnote {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
 
-    iframe {
-      width: 100%;
-      height: 260px;
-      border: none;
-      border-radius: 12px;
-      margin-top: 15px;
-      border: 2px solid #7a1212;
-    }
+iframe {
+  width: 100%;
+  height: 260px;
+  border-radius: 14px;
+  margin-top: 15px;
+  border: 2px solid var(--primary);
+}
 
-    .note {
-      margin-top: 40px;
-      padding: 15px;
-      background: #fce7e7;
-      border-left: 4px solid #7a1212;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      text-align: center;
-    }
+.note {
+  margin-top: 40px;
+  padding: 18px;
+  background: #fff3cc;
+  border-left: 4px solid var(--secondary);
+  border-radius: 12px;
+  text-align: center;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.85rem;
-      color: #888;
-      border-top: 1px solid #eee;
-    }
-  </style>
+/* FORM */
+.form-group {
+  margin-bottom: 15px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+@media(max-width:600px){
+  header h1{font-size:2rem;}
+}
+</style>
 </head>
+
 <body>
 
 <header>
@@ -128,7 +157,7 @@
     <div class="highlight">080 9876543211</div>
     <div class="highlight">080 9876543222</div>
     <div class="subnote">
-      Please note: The Offices, Departments, Research Centres and other Facilities have their own numbers. Please consult the Directory or the Department/Centre websites.
+      Please note: The Offices, Departments, Research Centres and other Facilities have their own numbers.
     </div>
   </div>
 
@@ -138,6 +167,29 @@
     <iframe src="https://maps.google.com/maps?q=BMS%20College%20of%20Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
   </div>
 
+  <!-- FORM -->
+  <div class="card">
+    <div class="title">Enquiry Form</div>
+
+    <div class="form-group">
+      <input type="text" placeholder="Your Name" required>
+    </div>
+
+    <div class="form-group">
+      <input type="email" placeholder="Your Email" required>
+    </div>
+
+    <div class="form-group">
+      <input type="tel" placeholder="Contact Number" required>
+    </div>
+
+    <div class="form-group">
+      <textarea placeholder="Reason for Contact" required></textarea>
+    </div>
+
+    <button>Submit</button>
+  </div>
+
   <div class="note">
     BMS College of Engineering, Bull Temple Rd, Basavanagudi, Bengaluru, Karnataka 560004
   </div>
@@ -145,7 +197,7 @@
 </div>
 
 <footer>
-  © 2026 College Research Insights
+  © 2026 BMSCE Portal
 </footer>
 
 </body>
