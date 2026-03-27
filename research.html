@@ -1,112 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>College Research Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Research Portal</title>
 
-  
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #ffffff;
-      color: #111111;
-      line-height: 1.6;
-    }
+<style>
+:root {
+  --primary: #660000;
+  --secondary: #b38b00;
+  --accent: #f0d67e;
+  --bg: #fff9e6;
+  --text: #3a0b0b;
+  --muted: #6e3b00;
+}
 
-    header {
-      background: linear-gradient(90deg, #5f0f0f, #7a1212);
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-      color: white;
-    }
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 2.8rem;
-      letter-spacing: 1px;
-    }
+/* HEADER */
+header {
+  background: linear-gradient(90deg, var(--primary), #7a1212);
+  padding: 60px 20px;
+  text-align: center;
+  color: gold;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 8px 24px rgba(102,0,0,0.4);
+  animation: fadeDown 1s ease;
+}
 
-    .container {
-      padding: 50px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
+header h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  letter-spacing: 1px;
+}
 
-    .section {
-      margin-bottom: 40px;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
+/* CONTAINER */
+.container {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
 
-    .section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+/* SECTION ANIMATION */
+.section {
+  margin-bottom: 50px;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.8s ease;
+}
 
-    .section h2 {
-      color: #5f0f0f;
-      margin-bottom: 10px;
-      border-left: 5px solid #7a1212;
-      padding-left: 10px;
-    }
+.section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 25px;
-      margin-top: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-      border: 2px solid #7a1212;
-    }
+/* TITLES */
+.section h2 {
+  color: var(--primary);
+  margin-bottom: 10px;
+  border-left: 5px solid var(--secondary);
+  padding-left: 12px;
+  font-weight: 700;
+}
 
-    .card:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-    }
+/* CARD */
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  margin-top: 15px;
+  border: 2px solid var(--primary);
+  box-shadow: 0 5px 15px rgba(102,0,0,0.08);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-    .highlight {
-      color: #7a1212;
-      font-weight: 600;
-    }
+/* GOLD HOVER LINE */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary), var(--accent));
+  transition: 0.4s;
+}
 
-    .tag {
-      display: inline-block;
-      background: #fce7e7;
-      color: #5f0f0f;
-      padding: 5px 10px;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      margin-right: 5px;
-    }
+.card:hover::after {
+  width: 100%;
+}
 
-    .quote {
-      font-style: italic;
-      border-left: 4px solid #7a1212;
-      padding-left: 12px;
-      margin-top: 10px;
-      color: #444;
-    }
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 35px rgba(179,139,0,0.25);
+  border-color: var(--secondary);
+}
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-      background: #f3f4f6;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      color: #374151;
-      font-size: 0.9rem;
-    }
-  </style>
+/* TEXT */
+.highlight {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.tag {
+  display: inline-block;
+  background: #fff3cc;
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin: 5px;
+  transition: 0.3s;
+}
+
+.tag:hover {
+  background: var(--secondary);
+  color: white;
+}
+
+.quote {
+  font-style: italic;
+  border-left: 4px solid var(--secondary);
+  padding-left: 12px;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 25px;
+  margin-top: 40px;
+  background: var(--bg);
+  border-top: 2px solid var(--primary);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ANIMATIONS */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2.2rem;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <header>
@@ -133,13 +196,13 @@
   <div class="section">
     <h2>Featured Researchers</h2>
     <div class="card">
-      <p><span class="highlight">Vaishnav</span> — An expert in AI/ML research with over 7 years of experience. He completed his Master's from Harvard and has contributed to advanced machine learning systems and intelligent automation.</p>
+      <p><span class="highlight">Vaishnav</span> — AI/ML expert with global experience.</p>
       <p class="quote">"Research is not about finding answers, but asking the right questions."</p>
 
-      <p style="margin-top:20px;"><span class="highlight">Varun Rajesh</span> — Holds a Master's in Mechanical Engineering from Stanford. Currently working in research and development at BMSCE, focusing on innovative mechanical systems and applied engineering solutions.</p>
+      <p style="margin-top:20px;"><span class="highlight">Varun Rajesh</span> — Mechanical R&D innovator.</p>
       <p class="quote">"Engineering innovation begins where curiosity meets persistence."</p>
 
-      <p style="margin-top:20px;"><span class="highlight">Ana de Armas</span> — A collaborating researcher associated with the college, actively guiding students in the field of robotics and intelligent systems. She plays a key role in mentoring student-led robotics projects and innovation initiatives.</p>
+      <p style="margin-top:20px;"><span class="highlight">Ana de Armas</span> — Robotics mentor guiding innovation.</p>
       <p class="quote">"Robotics is where imagination meets engineering reality."</p>
     </div>
   </div>
@@ -148,13 +211,7 @@
     <h2>Research Facilities</h2>
     <div class="card">
       <p>
-        Our campus is equipped with <span class="highlight">state-of-the-art laboratories</span>, high-performance computing systems, and collaborative workspaces designed to foster innovation.
-      </p>
-      <p>
-        Facilities include AI research labs, mechanical prototyping units, data analytics centers, and dedicated research hubs for interdisciplinary work.
-      </p>
-      <p>
-        We ensure students have access to the latest tools, software, and mentorship required to excel in research.
+        Our campus features <span class="highlight">state-of-the-art labs</span>, AI centers, and collaborative spaces for innovation.
       </p>
     </div>
   </div>
@@ -163,12 +220,9 @@
     <h2>Student Research Support</h2>
     <div class="card">
       <p>
-        We actively support students by providing <span class="highlight">guided research programs</span>, funding opportunities, and expert mentorship.
+        We provide mentorship, funding, and real-world project exposure for students.
       </p>
-      <p>
-        Students can participate in live projects, publish research papers, and collaborate with experienced researchers.
-      </p>
-      <p class="quote">"Great research starts with great guidance and the courage to explore."</p>
+      <p class="quote">"Great research starts with great guidance."</p>
     </div>
   </div>
 
@@ -176,32 +230,29 @@
     <h2>Future Vision</h2>
     <div class="card">
       <p>
-        We aim to expand our research capabilities by integrating emerging technologies and fostering global partnerships.
-      </p>
-      <p>
-        Our goal is to build a <span class="highlight">research-driven ecosystem</span> that empowers innovation and societal growth.
+        Building a <span class="highlight">research-driven ecosystem</span> with global collaborations.
       </p>
     </div>
   </div>
 
 </div>
 
-
+<footer>
+  © 2026 College Research Insights
+</footer>
 
 <script>
-  const sections = document.querySelectorAll('.section');
+const sections = document.querySelectorAll('.section');
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.2 });
-
-  sections.forEach(section => {
-    observer.observe(section);
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
   });
+}, { threshold: 0.2 });
+
+sections.forEach(section => observer.observe(section));
 </script>
 
 </body>
