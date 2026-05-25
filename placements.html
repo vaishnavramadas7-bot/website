@@ -7,174 +7,352 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #fff8f0;
-    color: #610000;
-    scroll-behavior: smooth;
-  }
+:root {
+  --red-deep:   #8b0000;
+  --red-mid:    #c0392b;
+  --red-bright: #e74c3c;
+  --grey-dark:  #1a1a1a;
+  --grey-mid:   #2e2e2e;
+  --grey-card:  #363636;
+  --grey-light: #4a4a4a;
+  --grey-pale:  #b0b0b0;
+  --off-white:  #f2f2f2;
+  --white:      #ffffff;
+}
 
-  /* Header with flat top and rounded bottom edges */
-  header {
-    background: #610000;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    border-radius: 0 0 50px 50px;
-    margin: 10px 0;
-    box-shadow: 0 4px 8px rgba(97, 0, 0, 0.3);
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  .container {
-    width: 60%;
-    margin: auto;
-    padding: 20px;
-  }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--grey-dark);
+  color: var(--off-white);
+  overflow-x: hidden;
+}
 
-  .card {
-    background: #fff;
-    padding: 18px;
-    margin: 15px 0;
-    border-radius: 10px;
-    border: 2px solid #610000;
-    box-shadow: 0 3px 7px rgba(97, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    will-change: transform;
-  }
+/* noise grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
 
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(97, 0, 0, 0.3);
-    z-index: 10;
-  }
+/* ─── HEADER ─────────────────────────────── */
+header {
+  position: relative;
+  background: var(--grey-mid);
+  text-align: center;
+  padding: 70px 20px 55px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
 
-  .highlight {
-    border: 3px solid #610000;
-  }
+header::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192,57,43,0.3) 0%, transparent 70%);
+  top: -220px; left: 50%;
+  transform: translateX(-50%);
+  animation: pulsate 6s ease-in-out infinite;
+  pointer-events: none;
+}
 
-  .active {
-    border: 3px solid #b38b00;
-    transform: scale(1.05);
-  }
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red-mid), var(--red-bright), var(--red-mid), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
 
-  .kpi-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
+@keyframes pulsate {
+  0%,100% { transform: translateX(-50%) scale(1);    opacity: 1; }
+  50%      { transform: translateX(-50%) scale(1.14); opacity: 0.7; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
 
-  .kpi {
-    flex: 1;
-    text-align: center;
-    padding: 15px;
-    border: 2px solid #b38b00;
-    border-radius: 10px;
-    background: #fff9e6;
-    color: #610000;
-    font-weight: 600;
-  }
+header h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.3s forwards;
+}
 
-  .kpi h3 {
-    margin: 5px 0;
-    color: #b38b00;
-    font-size: 1.6rem;
-  }
+header p {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: var(--grey-pale);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.5s forwards;
+}
 
-  .buttons button {
-    margin: 5px;
-    padding: 8px 14px;
-    border: none;
-    background: #610000;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.25s ease;
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  .buttons button:hover {
-    background: #804000;
-  }
+/* ─── CONTAINER ──────────────────────────── */
+.container {
+  width: 65%;
+  margin: auto;
+  padding: 30px 20px 60px;
+  position: relative;
+  z-index: 1;
+}
 
-  h2 {
-    color: #610000;
-    border-bottom: 3px solid #b38b00;
-    padding-bottom: 6px;
-    margin-bottom: 12px;
-  }
+/* ─── PDF BUTTON ─────────────────────────── */
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red-deep);
+  color: var(--off-white);
+  padding: 10px 22px;
+  border: 1px solid rgba(231,76,60,0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 16px rgba(139,0,0,0.4);
+}
 
-  ul {
-    padding-left: 20px;
-  }
+.pdf-btn:hover {
+  background: var(--red-mid);
+  box-shadow: 0 6px 24px rgba(192,57,43,0.6);
+  transform: translateY(-2px);
+}
 
-  li {
-    margin: 10px 0;
-  }
+/* ─── KPI ────────────────────────────────── */
+.kpi-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 28px;
+}
 
-  .pdf-btn {
-    background: #610000;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: background-color 0.25s ease;
-    margin-bottom: 20px;
-  }
+.kpi {
+  flex: 1;
+  text-align: center;
+  padding: 22px 14px;
+  background: var(--grey-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
 
-  .pdf-btn:hover {
-    background: #804000;
-  }
+.kpi::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red-bright), var(--red-deep));
+  transition: width 0.4s;
+}
 
-  /* Hide branch sections initially */
-  .branch {
-    display: none;
-  }
+.kpi:hover { transform: translateY(-5px); box-shadow: 0 14px 32px rgba(0,0,0,0.45); }
+.kpi:hover::after { width: 100%; }
 
-  /* Reduce pie chart height */
-  #companyChart {
-    max-width: 50%;
-    margin: auto;
-    display: block;
-  }
+.kpi h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--red-bright);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
 
-  /* Responsive adjustments */
-  @media (max-width: 900px) {
-    .container {
-      width: 90%;
-      padding: 10px;
-    }
-    .kpi-container {
-      flex-direction: column;
-      gap: 15px;
-    }
-    .kpi {
-      font-size: 0.9rem;
-    }
-    .kpi h3 {
-      font-size: 1.3rem;
-    }
-    #companyChart {
-      max-width: 90%;
-    }
-  }
+.kpi p {
+  font-size: 0.75rem;
+  color: var(--grey-pale);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* ─── CARD ───────────────────────────────── */
+.card {
+  background: var(--grey-card);
+  padding: 24px 26px;
+  margin: 18px 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  will-change: transform;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--red-deep), var(--red-bright));
+  border-radius: 4px 0 0 4px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red-bright), var(--red-deep));
+  transition: width 0.45s ease;
+}
+
+.card:hover::before { transform: scaleY(1); }
+.card:hover::after  { width: 100%; }
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(192,57,43,0.25);
+  border-color: rgba(192,57,43,0.3);
+  z-index: 10;
+}
+
+.card.highlight {
+  border: 1px solid rgba(192,57,43,0.4);
+  background: rgba(139,0,0,0.12);
+}
+
+.card.active {
+  border: 1px solid var(--red-mid);
+  background: rgba(139,0,0,0.18);
+  transform: scale(1.03);
+}
+
+/* ─── HEADINGS ───────────────────────────── */
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.07em;
+  color: var(--white);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 22px; height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--red-deep), var(--red-bright));
+  flex-shrink: 0;
+}
+
+/* ─── LIST ───────────────────────────────── */
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin: 10px 0;
+  color: var(--grey-pale);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+li::marker { color: var(--red-bright); }
+
+/* ─── STAT TEXT ──────────────────────────── */
+.card p {
+  color: var(--grey-pale);
+  font-size: 0.9rem;
+  margin: 6px 0;
+  line-height: 1.6;
+}
+
+.card p strong { color: var(--white); }
+
+/* ─── BRANCH BUTTONS ─────────────────────── */
+.buttons h2 { margin-bottom: 16px; }
+
+.buttons button {
+  margin: 5px;
+  padding: 9px 16px;
+  border: 1px solid rgba(192,57,43,0.4);
+  background: rgba(139,0,0,0.25);
+  color: var(--off-white);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+}
+
+.buttons button:hover {
+  background: var(--red-mid);
+  border-color: var(--red-mid);
+  transform: translateY(-2px);
+}
+
+/* ─── BRANCH SECTIONS ────────────────────── */
+.branch { display: none; }
+
+/* ─── PIE CHART SIZE ─────────────────────── */
+#companyChart {
+  max-width: 50%;
+  margin: auto;
+  display: block;
+}
+
+/* ─── RESPONSIVE ─────────────────────────── */
+@media (max-width: 900px) {
+  .container { width: 92%; padding: 20px 14px 50px; }
+  .kpi-container { flex-direction: column; gap: 12px; }
+  #companyChart { max-width: 90%; }
+}
 </style>
 </head>
-
 <body>
 
 <header>
   <h1>BMSCE Placement Dashboard</h1>
-  <p>Analytics Report</p>
+  <p>Analytics Report · 2025</p>
 </header>
 
 <div class="container" id="dashboard">
 
-  <button class="pdf-btn" onclick="downloadPDF()">Download as PDF</button>
+  <button class="pdf-btn" onclick="downloadPDF()">⬇ Download as PDF</button>
 
   <!-- KPI -->
   <div class="kpi-container">
@@ -192,7 +370,7 @@
     </div>
     <div class="kpi">
       <h3>94%</h3>
-      <p>Top Branch Placement</p>
+      <p>Top Branch</p>
     </div>
   </div>
 
@@ -248,7 +426,7 @@
     <p>Placement: 76%</p>
   </div>
 
-  <!-- Buttons -->
+  <!-- Branch Buttons -->
   <div class="card buttons">
     <h2>Select Branch</h2>
     <button onclick="show('cse')">CSE</button>
@@ -320,51 +498,59 @@
 </div>
 
 <script>
-  // Scroll + highlight branch
   function show(id) {
     document.querySelectorAll(".branch").forEach(b => {
       b.style.display = "none";
       b.classList.remove("active");
     });
-    let el = document.getElementById(id);
+    const el = document.getElementById(id);
     el.style.display = "block";
     el.classList.add("active");
     el.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
-  // PDF download
   function downloadPDF() {
-    let element = document.getElementById("dashboard");
-    html2pdf().from(element).save("Placement_Report.pdf");
+    html2pdf().from(document.getElementById("dashboard")).save("Placement_Report.pdf");
   }
 
-  // Charts init after DOM loads
+  const GRID_COLOR  = "rgba(255,255,255,0.07)";
+  const TICK_COLOR  = "#b0b0b0";
+  const LEGEND_COLOR = "#b0b0b0";
+
+  const sharedScaleOpts = {
+    y: {
+      beginAtZero: true,
+      ticks: { color: TICK_COLOR, font: { family: 'DM Sans' } },
+      grid:  { color: GRID_COLOR },
+    },
+    x: {
+      ticks: { color: TICK_COLOR, font: { family: 'DM Sans' } },
+      grid:  { color: GRID_COLOR },
+    },
+  };
+
+  const sharedPlugins = {
+    legend: { labels: { color: LEGEND_COLOR, font: { family: 'DM Sans' } } },
+  };
+
   window.onload = function () {
+
     new Chart(document.getElementById("packageChart"), {
       type: "bar",
       data: {
         labels: ["CSE", "ISE", "AIML", "ECE", "EEE", "Mech", "Civil"],
-        datasets: [
-          {
-            label: "Avg Package (LPA)",
-            data: [14.2, 12.6, 13.1, 8.6, 7.4, 6.1, 5.2],
-            backgroundColor: "#610000",
-          },
-        ],
+        datasets: [{
+          label: "Avg Package (LPA)",
+          data: [14.2, 12.6, 13.1, 8.6, 7.4, 6.1, 5.2],
+          backgroundColor: "#c0392b",
+          borderRadius: 6,
+          borderSkipped: false,
+        }],
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { color: "#610000" },
-            grid: { color: "#f1e3b3" },
-          },
-          x: { ticks: { color: "#610000" }, grid: { color: "#f1e3b3" } },
-        },
-        plugins: {
-          legend: { labels: { color: "#610000" } },
-        },
+        scales: sharedScaleOpts,
+        plugins: sharedPlugins,
       },
     });
 
@@ -372,60 +558,40 @@
       type: "bar",
       data: {
         labels: ["CSE", "ISE", "AIML", "ECE", "EEE", "Mech", "Civil"],
-        datasets: [
-          {
-            label: "Placement %",
-            data: [94, 92, 91, 84, 79, 74, 68],
-            backgroundColor: "#b38b00",
-          },
-        ],
+        datasets: [{
+          label: "Placement %",
+          data: [94, 92, 91, 84, 79, 74, 68],
+          backgroundColor: "#8b0000",
+          borderRadius: 6,
+          borderSkipped: false,
+        }],
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { color: "#610000" },
-            grid: { color: "#f1e3b3" },
-          },
-          x: { ticks: { color: "#610000" }, grid: { color: "#f1e3b3" } },
-        },
-        plugins: {
-          legend: { labels: { color: "#610000" } },
-        },
+        scales: sharedScaleOpts,
+        plugins: sharedPlugins,
       },
     });
 
-    const companyData = {
-      labels: ["Amazon", "Accenture", "Oracle", "IBM", "Deloitte", "Adobe"],
-      datasets: [
-        {
-          data: [15, 25, 10, 12, 20, 8],
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-            "#FF9F40",
-          ],
-        },
-      ],
-    };
-
     new Chart(document.getElementById("companyChart"), {
       type: "pie",
-      data: companyData,
+      data: {
+        labels: ["Amazon", "Accenture", "Oracle", "IBM", "Deloitte", "Adobe"],
+        datasets: [{
+          data: [15, 25, 10, 12, 20, 8],
+          backgroundColor: ["#e74c3c","#c0392b","#8b0000","#5a0000","#a93226","#922b21"],
+          borderColor: "#2e2e2e",
+          borderWidth: 2,
+        }],
+      },
       options: {
+        responsive: true,
         plugins: {
           legend: {
             display: true,
-            labels: {
-              font: { size: 14 },
-            },
+            labels: { color: LEGEND_COLOR, font: { family: 'DM Sans', size: 13 }, padding: 16 },
           },
         },
-        responsive: true,
       },
     });
 
@@ -437,34 +603,32 @@
           {
             label: "Avg Package (LPA)",
             data: [6.5, 7.2, 9.8, 10.5, 11.2, 11.4],
-            borderColor: "#610000",
-            fill: false,
+            borderColor: "#e74c3c",
+            backgroundColor: "rgba(231,76,60,0.08)",
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: "#e74c3c",
+            pointRadius: 5,
           },
           {
             label: "Placement %",
             data: [65, 70, 78, 80, 81, 82],
-            borderColor: "#b38b00",
-            fill: false,
+            borderColor: "#8b0000",
+            backgroundColor: "rgba(139,0,0,0.08)",
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: "#8b0000",
+            pointRadius: 5,
           },
         ],
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            ticks: { color: "#610000" },
-            grid: { color: "#f1e3b3" },
-          },
-          x: {
-            ticks: { color: "#610000" },
-            grid: { color: "#f1e3b3" },
-          },
-        },
-        plugins: {
-          legend: { labels: { color: "#610000" } },
-        },
+        scales: sharedScaleOpts,
+        plugins: sharedPlugins,
       },
     });
+
   };
 </script>
 
