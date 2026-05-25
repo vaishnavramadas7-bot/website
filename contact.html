@@ -4,105 +4,241 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact - BMSCE Portal</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #660000;
-  --secondary: #b38b00;
-  --accent: #f0d67e;
-  --bg: #fff9e6;
-  --text: #3a0b0b;
+  --red-deep:   #8b0000;
+  --red-mid:    #c0392b;
+  --red-bright: #e74c3c;
+  --grey-dark:  #1a1a1a;
+  --grey-mid:   #2e2e2e;
+  --grey-card:  #363636;
+  --grey-pale:  #b0b0b0;
+  --off-white:  #f2f2f2;
+  --white:      #ffffff;
 }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  background: var(--grey-dark);
+  color: var(--off-white);
+  overflow-x: hidden;
 }
 
+/* noise grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── HEADER ─────────────────────────────── */
 header {
-  background: linear-gradient(90deg, var(--primary), #7a1212);
-  padding: 80px 20px 60px;
+  position: relative;
+  background: var(--grey-mid);
   text-align: center;
-  color: var(--accent);
+  padding: 90px 20px 70px;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192,57,43,0.3) 0%, transparent 70%);
+  top: -220px; left: 50%;
+  transform: translateX(-50%);
+  animation: pulsate 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red-mid), var(--red-bright), var(--red-mid), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes pulsate {
+  0%,100% { transform: translateX(-50%) scale(1);    opacity: 1; }
+  50%      { transform: translateX(-50%) scale(1.14); opacity: 0.7; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 
 header h1 {
-  margin: 0;
-  font-size: 2.8rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.3s forwards;
 }
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── CONTAINER ──────────────────────────── */
 .container {
   max-width: 900px;
   margin: auto;
-  padding: 60px 20px;
+  padding: 60px 24px 80px;
+  position: relative;
+  z-index: 1;
 }
 
+/* ─── CARD ───────────────────────────────── */
 .card {
-  padding: 25px;
-  margin-bottom: 25px;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
+  background: var(--grey-card);
+  padding: 28px 30px;
+  margin-bottom: 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
+
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--red-deep), var(--red-bright));
+  border-radius: 4px 0 0 4px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red-bright), var(--red-deep));
+  transition: width 0.45s ease;
+}
+
+.card:hover::before { transform: scaleY(1); }
+.card:hover::after  { width: 100%; }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 20px 42px rgba(0,0,0,0.5), 0 0 0 1px rgba(192,57,43,0.25);
+  border-color: rgba(192,57,43,0.3);
 }
 
+/* ─── CARD CONTENT ───────────────────────── */
 .title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--primary);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: var(--white);
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--red-deep), var(--red-bright));
+  flex-shrink: 0;
 }
 
 .highlight {
-  font-size: 1.05rem;
+  font-size: 1rem;
+  color: var(--off-white);
+  font-weight: 500;
+  line-height: 1.7;
 }
 
 .subnote {
   margin-top: 10px;
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 0.82rem;
+  color: var(--grey-pale);
+  font-style: italic;
+  line-height: 1.6;
 }
 
+/* ─── MAP ────────────────────────────────── */
 iframe {
   width: 100%;
   height: 260px;
-  border-radius: 14px;
-  margin-top: 15px;
-  border: 2px solid var(--primary);
+  border-radius: 12px;
+  margin-top: 16px;
+  border: 1px solid rgba(192,57,43,0.35);
+  display: block;
+  filter: grayscale(30%) brightness(0.85);
+  transition: filter 0.3s;
 }
 
+iframe:hover { filter: grayscale(0%) brightness(1); }
+
+/* ─── NOTE ───────────────────────────────── */
 .note {
-  margin-top: 40px;
-  padding: 18px;
-  background: #fff3cc;
-  border-left: 4px solid var(--secondary);
+  margin-top: 36px;
+  padding: 18px 22px;
+  background: rgba(139,0,0,0.15);
+  border-left: 4px solid var(--red-mid);
   border-radius: 12px;
   text-align: center;
+  color: var(--grey-pale);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
-/* FORM */
+/* ─── FORM ───────────────────────────────── */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 input, textarea {
   width: 100%;
-  padding: 12px;
+  padding: 12px 16px;
   border-radius: 10px;
-  border: 1px solid #ccc;
-  font-family: inherit;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: var(--off-white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(176,176,176,0.5);
+}
+
+input:focus, textarea:focus {
+  border-color: var(--red-mid);
+  background: rgba(192,57,43,0.08);
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.15);
 }
 
 textarea {
@@ -111,34 +247,55 @@ textarea {
 }
 
 button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 12px 20px;
+  background: var(--red-deep);
+  color: var(--off-white);
+  border: 1px solid rgba(231,76,60,0.35);
+  padding: 12px 28px;
   border-radius: 25px;
   cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
   font-weight: 600;
-  transition: 0.3s;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(139,0,0,0.4);
+  margin-top: 4px;
 }
 
 button:hover {
-  background: var(--secondary);
-  color: var(--primary);
+  background: var(--red-mid);
+  box-shadow: 0 6px 24px rgba(192,57,43,0.55);
+  transform: translateY(-2px);
 }
 
+/* ─── FOOTER ─────────────────────────────── */
 footer {
   text-align: center;
-  padding: 25px;
-  font-size: 0.9rem;
-  color: #777;
+  padding: 30px 20px;
+  background: var(--grey-mid);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: var(--grey-pale);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  position: relative;
 }
 
-@media(max-width:600px){
-  header h1{font-size:2rem;}
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red-mid), transparent);
+}
+
+/* ─── RESPONSIVE ─────────────────────────── */
+@media (max-width: 600px) {
+  header { padding: 65px 20px 50px; }
+  .container { padding: 40px 16px 60px; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -164,30 +321,24 @@ footer {
   <div class="card">
     <div class="title">Location</div>
     <div class="highlight">BMS College of Engineering, Bull Temple Rd, Basavanagudi, Bengaluru, Karnataka 560004</div>
-    <iframe src="https://maps.google.com/maps?q=BMS%20College%20of%20Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+    <iframe src="https://maps.google.com/maps?q=BMS%20College%20of%20Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed" title="BMSCE Location Map"></iframe>
   </div>
 
-  <!-- FORM -->
   <div class="card">
     <div class="title">Enquiry Form</div>
-
     <div class="form-group">
       <input type="text" placeholder="Your Name" required>
     </div>
-
     <div class="form-group">
       <input type="email" placeholder="Your Email" required>
     </div>
-
     <div class="form-group">
       <input type="tel" placeholder="Contact Number" required>
     </div>
-
     <div class="form-group">
       <textarea placeholder="Reason for Contact" required></textarea>
     </div>
-
-    <button>Submit</button>
+    <button type="submit">Submit</button>
   </div>
 
   <div class="note">
@@ -196,9 +347,6 @@ footer {
 
 </div>
 
-<footer>
-  © 2026 BMSCE Portal
-</footer>
 
 </body>
 </html>
